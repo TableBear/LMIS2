@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzx.mapper.CitysMapper">
+  <resultMap id="BaseResultMap" type="com.hzx.pojo.Citys">
+    <id column="cityId" jdbcType="INTEGER" property="cityid" />
+    <result column="CityCode" jdbcType="VARCHAR" property="citycode" />
+    <result column="cityName" jdbcType="VARCHAR" property="cityname" />
+    <result column="ProvinceCode" jdbcType="VARCHAR" property="provincecode" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cityId, CityCode, cityName, ProvinceCode
+  </sql>
+  <select id="selectByExample" parameterType="com.hzx.pojo.CitysExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from citys
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from citys
+    where cityId = #{cityid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from citys
+    where cityId = #{cityid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hzx.pojo.CitysExample">
+    delete from citys
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hzx.pojo.Citys">
+    insert into citys (cityId, CityCode, cityName, 
+      ProvinceCode)
+    values (#{cityid,jdbcType=INTEGER}, #{citycode,jdbcType=VARCHAR}, #{cityname,jdbcType=VARCHAR}, 
+      #{provincecode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hzx.pojo.Citys">
+    insert into citys
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cityid != null">
+        cityId,
+      </if>
+      <if test="citycode != null">
+        CityCode,
+      </if>
+      <if test="cityname != null">
+        cityName,
+      </if>
+      <if test="provincecode != null">
+        ProvinceCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cityid != null">
+        #{cityid,jdbcType=INTEGER},
+      </if>
+      <if test="citycode != null">
+        #{citycode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityname != null">
+        #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="provincecode != null">
+        #{provincecode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hzx.pojo.CitysExample" resultType="java.lang.Integer">
+    select count(*) from citys
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update citys
+    <set>
+      <if test="record.cityid != null">
+        cityId = #{record.cityid,jdbcType=INTEGER},
+      </if>
+      <if test="record.citycode != null">
+        CityCode = #{record.citycode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityname != null">
+        cityName = #{record.cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provincecode != null">
+        ProvinceCode = #{record.provincecode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update citys
+    set cityId = #{record.cityid,jdbcType=INTEGER},
+      CityCode = #{record.citycode,jdbcType=VARCHAR},
+      cityName = #{record.cityname,jdbcType=VARCHAR},
+      ProvinceCode = #{record.provincecode,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hzx.pojo.Citys">
+    update citys
+    <set>
+      <if test="citycode != null">
+        CityCode = #{citycode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityname != null">
+        cityName = #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="provincecode != null">
+        ProvinceCode = #{provincecode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cityId = #{cityid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hzx.pojo.Citys">
+    update citys
+    set CityCode = #{citycode,jdbcType=VARCHAR},
+      cityName = #{cityname,jdbcType=VARCHAR},
+      ProvinceCode = #{provincecode,jdbcType=VARCHAR}
+    where cityId = #{cityid,jdbcType=INTEGER}
+  </update>
+</mapper>

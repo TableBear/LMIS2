@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzx.mapper.ProvincesMapper">
+  <resultMap id="BaseResultMap" type="com.hzx.pojo.Provinces">
+    <id column="provinceId" jdbcType="INTEGER" property="provinceid" />
+    <result column="ProvinceCode" jdbcType="VARCHAR" property="provincecode" />
+    <result column="provincesName" jdbcType="VARCHAR" property="provincesname" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    provinceId, ProvinceCode, provincesName
+  </sql>
+  <select id="selectByExample" parameterType="com.hzx.pojo.ProvincesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from provinces
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from provinces
+    where provinceId = #{provinceid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from provinces
+    where provinceId = #{provinceid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hzx.pojo.ProvincesExample">
+    delete from provinces
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hzx.pojo.Provinces">
+    insert into provinces (provinceId, ProvinceCode, provincesName
+      )
+    values (#{provinceid,jdbcType=INTEGER}, #{provincecode,jdbcType=VARCHAR}, #{provincesname,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hzx.pojo.Provinces">
+    insert into provinces
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="provinceid != null">
+        provinceId,
+      </if>
+      <if test="provincecode != null">
+        ProvinceCode,
+      </if>
+      <if test="provincesname != null">
+        provincesName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="provinceid != null">
+        #{provinceid,jdbcType=INTEGER},
+      </if>
+      <if test="provincecode != null">
+        #{provincecode,jdbcType=VARCHAR},
+      </if>
+      <if test="provincesname != null">
+        #{provincesname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hzx.pojo.ProvincesExample" resultType="java.lang.Integer">
+    select count(*) from provinces
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update provinces
+    <set>
+      <if test="record.provinceid != null">
+        provinceId = #{record.provinceid,jdbcType=INTEGER},
+      </if>
+      <if test="record.provincecode != null">
+        ProvinceCode = #{record.provincecode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provincesname != null">
+        provincesName = #{record.provincesname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update provinces
+    set provinceId = #{record.provinceid,jdbcType=INTEGER},
+      ProvinceCode = #{record.provincecode,jdbcType=VARCHAR},
+      provincesName = #{record.provincesname,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hzx.pojo.Provinces">
+    update provinces
+    <set>
+      <if test="provincecode != null">
+        ProvinceCode = #{provincecode,jdbcType=VARCHAR},
+      </if>
+      <if test="provincesname != null">
+        provincesName = #{provincesname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where provinceId = #{provinceid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hzx.pojo.Provinces">
+    update provinces
+    set ProvinceCode = #{provincecode,jdbcType=VARCHAR},
+      provincesName = #{provincesname,jdbcType=VARCHAR}
+    where provinceId = #{provinceid,jdbcType=INTEGER}
+  </update>
+</mapper>

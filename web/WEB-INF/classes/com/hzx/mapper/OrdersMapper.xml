@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzx.mapper.OrdersMapper">
+  <resultMap id="BaseResultMap" type="com.hzx.pojo.Orders">
+    <id column="ordersId" jdbcType="CHAR" property="ordersid" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="senderName" jdbcType="VARCHAR" property="sendername" />
+    <result column="senderMobielephone" jdbcType="CHAR" property="sendermobielephone" />
+    <result column="senderTelephone" jdbcType="CHAR" property="sendertelephone" />
+    <result column="origin" jdbcType="VARCHAR" property="origin" />
+    <result column="receiverName" jdbcType="VARCHAR" property="receivername" />
+    <result column="receiverMobilephone" jdbcType="CHAR" property="receivermobilephone" />
+    <result column="receiverTelephone" jdbcType="CHAR" property="receivertelephone" />
+    <result column="destination" jdbcType="VARCHAR" property="destination" />
+    <result column="postalFree" jdbcType="DECIMAL" property="postalfree" />
+    <result column="goodSize" jdbcType="DECIMAL" property="goodsize" />
+    <result column="goodWeight" jdbcType="DECIMAL" property="goodweight" />
+    <result column="requestDate" jdbcType="DATE" property="requestdate" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ordersId, createTime, senderName, senderMobielephone, senderTelephone, origin, receiverName, 
+    receiverMobilephone, receiverTelephone, destination, postalFree, goodSize, goodWeight, 
+    requestDate, state, note
+  </sql>
+  <select id="selectByExample" parameterType="com.hzx.pojo.OrdersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from orders
+    where ordersId = #{ordersid,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from orders
+    where ordersId = #{ordersid,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hzx.pojo.OrdersExample">
+    delete from orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hzx.pojo.Orders">
+    insert into orders (ordersId, createTime, senderName, 
+      senderMobielephone, senderTelephone, origin, 
+      receiverName, receiverMobilephone, receiverTelephone, 
+      destination, postalFree, goodSize, 
+      goodWeight, requestDate, state, 
+      note)
+    values (#{ordersid,jdbcType=CHAR}, #{createtime,jdbcType=TIMESTAMP}, #{sendername,jdbcType=VARCHAR}, 
+      #{sendermobielephone,jdbcType=CHAR}, #{sendertelephone,jdbcType=CHAR}, #{origin,jdbcType=VARCHAR}, 
+      #{receivername,jdbcType=VARCHAR}, #{receivermobilephone,jdbcType=CHAR}, #{receivertelephone,jdbcType=CHAR}, 
+      #{destination,jdbcType=VARCHAR}, #{postalfree,jdbcType=DECIMAL}, #{goodsize,jdbcType=DECIMAL}, 
+      #{goodweight,jdbcType=DECIMAL}, #{requestdate,jdbcType=DATE}, #{state,jdbcType=TINYINT}, 
+      #{note,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hzx.pojo.Orders">
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ordersid != null">
+        ordersId,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="sendername != null">
+        senderName,
+      </if>
+      <if test="sendermobielephone != null">
+        senderMobielephone,
+      </if>
+      <if test="sendertelephone != null">
+        senderTelephone,
+      </if>
+      <if test="origin != null">
+        origin,
+      </if>
+      <if test="receivername != null">
+        receiverName,
+      </if>
+      <if test="receivermobilephone != null">
+        receiverMobilephone,
+      </if>
+      <if test="receivertelephone != null">
+        receiverTelephone,
+      </if>
+      <if test="destination != null">
+        destination,
+      </if>
+      <if test="postalfree != null">
+        postalFree,
+      </if>
+      <if test="goodsize != null">
+        goodSize,
+      </if>
+      <if test="goodweight != null">
+        goodWeight,
+      </if>
+      <if test="requestdate != null">
+        requestDate,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ordersid != null">
+        #{ordersid,jdbcType=CHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendername != null">
+        #{sendername,jdbcType=VARCHAR},
+      </if>
+      <if test="sendermobielephone != null">
+        #{sendermobielephone,jdbcType=CHAR},
+      </if>
+      <if test="sendertelephone != null">
+        #{sendertelephone,jdbcType=CHAR},
+      </if>
+      <if test="origin != null">
+        #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="receivername != null">
+        #{receivername,jdbcType=VARCHAR},
+      </if>
+      <if test="receivermobilephone != null">
+        #{receivermobilephone,jdbcType=CHAR},
+      </if>
+      <if test="receivertelephone != null">
+        #{receivertelephone,jdbcType=CHAR},
+      </if>
+      <if test="destination != null">
+        #{destination,jdbcType=VARCHAR},
+      </if>
+      <if test="postalfree != null">
+        #{postalfree,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsize != null">
+        #{goodsize,jdbcType=DECIMAL},
+      </if>
+      <if test="goodweight != null">
+        #{goodweight,jdbcType=DECIMAL},
+      </if>
+      <if test="requestdate != null">
+        #{requestdate,jdbcType=DATE},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hzx.pojo.OrdersExample" resultType="java.lang.Integer">
+    select count(*) from orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update orders
+    <set>
+      <if test="record.ordersid != null">
+        ordersId = #{record.ordersid,jdbcType=CHAR},
+      </if>
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sendername != null">
+        senderName = #{record.sendername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendermobielephone != null">
+        senderMobielephone = #{record.sendermobielephone,jdbcType=CHAR},
+      </if>
+      <if test="record.sendertelephone != null">
+        senderTelephone = #{record.sendertelephone,jdbcType=CHAR},
+      </if>
+      <if test="record.origin != null">
+        origin = #{record.origin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receivername != null">
+        receiverName = #{record.receivername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receivermobilephone != null">
+        receiverMobilephone = #{record.receivermobilephone,jdbcType=CHAR},
+      </if>
+      <if test="record.receivertelephone != null">
+        receiverTelephone = #{record.receivertelephone,jdbcType=CHAR},
+      </if>
+      <if test="record.destination != null">
+        destination = #{record.destination,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postalfree != null">
+        postalFree = #{record.postalfree,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsize != null">
+        goodSize = #{record.goodsize,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodweight != null">
+        goodWeight = #{record.goodweight,jdbcType=DECIMAL},
+      </if>
+      <if test="record.requestdate != null">
+        requestDate = #{record.requestdate,jdbcType=DATE},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=TINYINT},
+      </if>
+      <if test="record.note != null">
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update orders
+    set ordersId = #{record.ordersid,jdbcType=CHAR},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      senderName = #{record.sendername,jdbcType=VARCHAR},
+      senderMobielephone = #{record.sendermobielephone,jdbcType=CHAR},
+      senderTelephone = #{record.sendertelephone,jdbcType=CHAR},
+      origin = #{record.origin,jdbcType=VARCHAR},
+      receiverName = #{record.receivername,jdbcType=VARCHAR},
+      receiverMobilephone = #{record.receivermobilephone,jdbcType=CHAR},
+      receiverTelephone = #{record.receivertelephone,jdbcType=CHAR},
+      destination = #{record.destination,jdbcType=VARCHAR},
+      postalFree = #{record.postalfree,jdbcType=DECIMAL},
+      goodSize = #{record.goodsize,jdbcType=DECIMAL},
+      goodWeight = #{record.goodweight,jdbcType=DECIMAL},
+      requestDate = #{record.requestdate,jdbcType=DATE},
+      state = #{record.state,jdbcType=TINYINT},
+      note = #{record.note,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hzx.pojo.Orders">
+    update orders
+    <set>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendername != null">
+        senderName = #{sendername,jdbcType=VARCHAR},
+      </if>
+      <if test="sendermobielephone != null">
+        senderMobielephone = #{sendermobielephone,jdbcType=CHAR},
+      </if>
+      <if test="sendertelephone != null">
+        senderTelephone = #{sendertelephone,jdbcType=CHAR},
+      </if>
+      <if test="origin != null">
+        origin = #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="receivername != null">
+        receiverName = #{receivername,jdbcType=VARCHAR},
+      </if>
+      <if test="receivermobilephone != null">
+        receiverMobilephone = #{receivermobilephone,jdbcType=CHAR},
+      </if>
+      <if test="receivertelephone != null">
+        receiverTelephone = #{receivertelephone,jdbcType=CHAR},
+      </if>
+      <if test="destination != null">
+        destination = #{destination,jdbcType=VARCHAR},
+      </if>
+      <if test="postalfree != null">
+        postalFree = #{postalfree,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsize != null">
+        goodSize = #{goodsize,jdbcType=DECIMAL},
+      </if>
+      <if test="goodweight != null">
+        goodWeight = #{goodweight,jdbcType=DECIMAL},
+      </if>
+      <if test="requestdate != null">
+        requestDate = #{requestdate,jdbcType=DATE},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ordersId = #{ordersid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hzx.pojo.Orders">
+    update orders
+    set createTime = #{createtime,jdbcType=TIMESTAMP},
+      senderName = #{sendername,jdbcType=VARCHAR},
+      senderMobielephone = #{sendermobielephone,jdbcType=CHAR},
+      senderTelephone = #{sendertelephone,jdbcType=CHAR},
+      origin = #{origin,jdbcType=VARCHAR},
+      receiverName = #{receivername,jdbcType=VARCHAR},
+      receiverMobilephone = #{receivermobilephone,jdbcType=CHAR},
+      receiverTelephone = #{receivertelephone,jdbcType=CHAR},
+      destination = #{destination,jdbcType=VARCHAR},
+      postalFree = #{postalfree,jdbcType=DECIMAL},
+      goodSize = #{goodsize,jdbcType=DECIMAL},
+      goodWeight = #{goodweight,jdbcType=DECIMAL},
+      requestDate = #{requestdate,jdbcType=DATE},
+      state = #{state,jdbcType=TINYINT},
+      note = #{note,jdbcType=VARCHAR}
+    where ordersId = #{ordersid,jdbcType=CHAR}
+  </update>
+</mapper>

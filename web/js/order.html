@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>下单</title>
+        <style type="text/css">
+        	.top-header {
+			    width: 998px;
+			    margin-left: auto;
+			    margin-right: auto;
+			    height: 230px;
+			}
+        	div.header{
+        		color: #929292;text-align: center;vertical-align: baseline;
+        		background-color:#FDF9EE;border:solid 1px #FCD8C3;
+        		height:35px;margin-top:3px;width:70%;margin: 0 auto;
+        	}
+        	div.content{font-family: "times new roman" "宋体";font-size: 18px;}
+        	div.middle{
+        		background-color:#FDF9EE;border:solid 1px #FCD8C3;height:35px;
+        		margin-top:3px;width:70%;margin: 0 auto;
+        	}
+        	tr td:nth-child(1){
+        		text-align: right;
+        	}
+        	.content input{width: 210px;text-align: left;}
+       
+        	.root-background .form-control {
+			    display: inline-block;
+			    padding: 6px 12px;
+			    font-size: 13px;
+			    line-height: 1.42857;
+			    color: #333;
+			    vertical-align: middle;
+			    background-color: #fff;
+			    background-image: none;
+			    border: 1px solid #ccc;
+			    border-radius: 0;
+			    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+			    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+			    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+			}
+        </style>
+        <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+       <!--<script type="text/javascript" src="js/comment.js" ></script>-->
+        <script type="text/javascript">
+            $(function(){
+                $.getJSON("http://120.79.203.43:8080/getAllProvince.action",
+                    function(result) {
+                        var objPro1 = document.getElementById("provinces1");
+                        var objPro2 = document.getElementById("provinces2");
+                        alert(objPro1);
+                        objPro1.length = 1;
+                        objPro2.length = 1;
+                        for(var i=0;i<result.length;i++) {
+                            objPro1[i+1] = new Option(result[i].provincesname.toString().trim(),result[i].provincecode);
+                            objPro2[i+1] = new Option(result[i].provincesname.toString().trim(),result[i].provincecode);
+                            console.log(i+":"+result[i].provincesname);//循环输出a:1,b:2,etc.
+                        }
+                    });
+            });
+     </script>
+    </head>
+    <body class="root-background">
+    	<div style="border-top: 5px #fff solid">
+	  	<div class="top-header" style="height: 25px;margin-bottom: 2px;background-color:#f6f6f6;border: 1px #E1E1E1 solid;">
+			<div id="welcome" style="float:left;height: 22px;margin-top: 4px;">&nbsp;&nbsp;您好， 欢迎使用网上下单！&nbsp;</div>
+			<div id="loginDiv" style="float: right;height: 25px"></div>
+		</div>
+		<div class="top-header" style="height:182px;">
+		<div class="top-banner" style="height: 60px;">
+		<div class="top-banner-img1" style="height: 58px;"></div>
+		<div class="top-banner-container1" style="height: 58px;">
+			<div class="top-banner-memu" style="height: 58px;">
+				<ul style="margin-top:30px;">  
+					<li><a href="http://www.11183.com.cn/">首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
+					<li><a href="http://www.11183.com.cn/sitemap.html">网站地图</a></li>
+				</ul>
+			</div>
+		</div>
+		</div>
+			<div class="flash-banner" style="border-top:#F08300 3px solid;margin-bottom: 0px;">
+				<img alt="图" style="width:998px;height:116px;margin-top:0px;margin-left:0px;" src="img/butt_r2_c1.jpg">
+			</div>
+		</div>
+
+    	<div class="header">
+			<table border="0" width="98%">
+				<tbody>
+					<tr>
+						<td width="5%"></td>
+						<td width="95%" align="center"><span class="spanimg"></span><span class="span">收寄件人信息填写&nbsp;&nbsp;&nbsp;&nbsp;若您已使用过快捷下单或已注册过，请点击“登陆”按钮登陆</span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<hr style="height:1px;margin-top:1px;" color="#929292" width="70%"/>
+    	<div class="content">
+    		<form>
+	    		<table style="margin: 0 auto;">
+	    			<tr>
+	    				<td><label for="senderName">寄件人：</label></td>
+	    				<td><input type="text" name="senderName" id="senderName" class="form-control"/></td>
+	    			</tr>
+	    			<tr>
+	    				<td ><label for="senderTelephone">寄件人手机：</label></td>
+	    				<td><input type="text" name="senderTelephone" id="senderTelephone" class="form-control" /></td>
+	    			</tr>
+	    			<tr>
+	    				<td ><label for="receiverTelephone">寄件人固话：</label></td>
+	    				<td class="left">
+		    				<input type="text" id="telNum_quhao" class="form-control" name="telNum_quhao" placeholder="区号"    title="区号" style="width: 39px; color: rgb(136, 136, 136);"/>
+		    				<span>-</span>
+		      				<input type="text" id="telNum_tel"   class="form-control" name="telNum_tel"   placeholder="电话号码" title="电话号码" style="width: 80px; color: rgb(136, 136, 136);"/>
+		      				<span>-</span>
+		      				<input type="text" id="telNum_fenji" class="form-control" name="telNum_fenji" placeholder="分机"    title="分机" style="width: 39px; color: rgb(136, 136, 136);" />
+	    				</td>
+	    			</tr>
+	    			<tr>
+	    				<td >地址：</td>
+	    				<td>
+	    					<select id="provinces1" name="provinces" class="form-control">
+	    						<option>请选择</option>
+	    					</select>
+	    					<span>省</span>
+	    					<select id="citys1" name="citys" class="form-control">
+	    						<option>请选择</option>
+	    					</select>
+	    					<span>市</span>
+	    					<select id="countrys1" name="countrys" class="form-control">
+	    						<option>请选择</option>
+	    					</select>
+	    					<span>县</span>
+	    				</td>
+	    				
+	    			</tr>
+	    			<tr>
+	    				<td ><label for="senderName">详细地址：</label></td>
+	    				<td><input class="form-control" type="text" name="senderName" id="senderName"/></td>
+	    			</tr>
+	    		</table>
+	    		<table style="margin: 0 auto;padding-top: 10px;">
+	    			<tr>
+	    				<td ><label for="receiverName">收件人：</label></td>
+	    				<td><input class="form-control" type="text" name="receiverName" id="receiverName" /></td>
+	    			</tr>
+	    			<tr>
+	    				<td ><label for="receiverTelephone">收件人手机：</label></td>
+	    				<td><input class="form-control" type="text" name="receiverTelephone" id="receiverTelephone" /></td>
+	    			</tr>
+	    			<tr>
+	    				<td ><label for="receiverTelephone">收件人固话：</label></td>
+	    				<td>
+		    				<input class="form-control" type="text" id="telNum_quhao" name="telNum_quhao" placeholder="区号"    title="区号" style="width: 40px; color: rgb(136, 136, 136);"/>
+		    				<span>-</span>
+		      				<input class="form-control" type="text" id="telNum_tel"   name="telNum_tel"   placeholder="电话号码" title="电话号码" style="width: 80px; color: rgb(136, 136, 136);"/>
+		      				<span>-</span>
+		      				<input class="form-control" type="text" id="telNum_fenji" name="telNum_fenji" placeholder="分机"    title="分机" style="width: 40px; color: rgb(136, 136, 136);" />
+	    				</td>
+	    			</tr>
+	    			<tr>
+	    				<td >地址：</td>
+	    				<td>
+	    					<select id="provinces2" name="provinces" class="form-control">
+	    						<option>请选择</option>
+	    					</select>
+	    					<span>省</span>
+	    					<select id="citys2" name="citys" class="form-control">
+	    						<option>请选择</option>
+	    					</select>
+	    					<span>市</span>
+	    					<select id="countrys2" name="countrys" class="form-control">
+	    						<option>请选择</option>
+	    					</select>
+	    					<span>县</span>
+	    				</td>
+	    			</tr>
+	    			<tr>
+	    				<td><label for="destination">详细地址：</label></td>
+	    				<td><input type="text" name="destination" id="destination" class="form-control" /></td>
+	    			</tr>
+	    		</table>
+    		</form>
+    	</div>
+    	<div class="middle">
+			<table border="0" width="98%">
+				<tbody><tr>
+					<td width="5%"></td>
+					<td width="95%" align="left" >
+							<a shref="javascript:void(0);" onclick="displayMessage('noteMessage','notePic');" 
+								style=";display: inline-block;position: relative;top: 5px;text-decoration: none;color:#929292;">备注
+								<img id="notePic" src="img/hidden.png" style="vertical-align:middle">
+							</a>
+					</td>
+					</tr>
+				</tbody></table>
+		</div>
+		<hr style="height:1px;margin-top:1px;" color="#929292" width="70%"/>
+		<div style="margin-top: 10px; width: 70%; display: block;margin: 0 auto;" id="noteMessage">
+			<table cellpadding="2" border="0" width="98%" style="line-height: 30px;">
+				<tbody><tr>
+					<td align="right" width="20%">物品名称：</td>
+					<td align="left" width="30%">
+						<input type="text" name="shipment.gooddesc" maxlength="100" value="" id="shipment.gooddesc" class="form-control" />
+					</td>
+					<td align="right" width="20%">类别：</td>
+					<td align="left" width="30%" style="">
+						<input type="radio" name="shipment.type" id="shipment.type1" checked="checked" value="1" style="vertical-align: middle;width:20px;"><label for="shipment.type1" style="vertical-align: middle;width:20px;">物品</label>
+						<input type="radio" name="shipment.type" id="shipment.type2" value="2" style="vertical-align: middle;width:20px;"><label for="shipment.type2" style="vertical-align: middle;width:20px;">信函</label>
+						<input type="radio" name="shipment.type" id="shipment.type3" value="3" style="vertical-align: middle;width:20px;"><label for="shipment.type3" style="vertical-align: middle;width:20px;">文件资料</label>
+					</td>
+				</tr>
+				<tr>     
+					<td align="right">尺寸：</td>
+					<td align="left">
+						<input class="form-control" type="hidden" name="shipment.goodsize" value=""  id="shipment.goodsize">
+						<input placeholder="长" class="form-control" type="text" onkeypress="intOnly()" style="width:31px" id="chang" maxlength="5" onblur="this.value=this.value.replace(/\D/g,'')" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" value=""/>
+						X&nbsp;<input placeholder="宽" class="form-control" type="text" onkeypress="intOnly()" style="width:31px" id="kuang" maxlength="5" onblur="this.value=this.value.replace(/\D/g,'')" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" value=""/>
+						X&nbsp;<input placeholder="高" class="form-control" type="text" onkeypress="intOnly()" style="width:31px" id="gao" maxlength="5" onblur="this.value=this.value.replace(/\D/g,'')" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" value=""/>
+					</td>
+					<td align="right">数量：</td>
+					<td align="left"><input class="form-control" type="text" name="shipment.count" value="" id="shipment.count" onblur="this.value=this.value.replace(/\D/g,'')" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+				</tr>
+				<tr>
+					<td align="right">是否保价：</td>
+					<td align="left"><input class="form-control" type="radio" name="shipment.ifinsure" id="saveShipmentForm_shipment_ifinsure1" value="1" style="vertical-align: middle;;width:20px;" onclick="onIfinsure(this);"><label for="saveShipmentForm_shipment_ifinsure1" style="vertical-align: middle;;width:20px;">是</label>
+					<input type="radio" name="shipment.ifinsure" id="saveShipmentForm_shipment_ifinsure0" checked="checked" value="0" style="vertical-align: middle;;width:20px;" onclick="onIfinsure(this);"><label for="saveShipmentForm_shipment_ifinsure0" style="vertical-align: middle;;width:20px;">否</label>
+
+					</td>
+					<td align="right">重量：</td>
+					<td align="left"><input class="form-control" type="text" name="shipment.weight" value="" id="shipment.weight" onblur="this.value=this.value.replace(/\D/g,'');" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/> 千克/KG</td>
+				</tr>
+				<tr id="insuremoneyDiv" style="display:none ">
+					<td align="right" width="20%">保价金额：</td>
+					<td align="left" width="30%">
+						<input class="form-control" id="shipment.insuremoney" maxlength="10" onkeypress="intOnly()" onblur="this.value=this.value.replace(/\D/g,'');" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" name="shipment.insuremoney" value=""/>
+					</td>
+					<td align="right"></td>
+					<td align="left"></td>
+				</tr>
+				<tr>
+					<td align="right" width="20%" valign="top">备注：</td>
+					<td align="left" colspan="3">
+						<textarea name="shipment.remark" cols="80" rows="3" id="shipment.remark"></textarea>
+					</td>
+				</tr>
+			</tbody></table>
+		</div>
+		<script type="text/jscript">
+			function displayMessage(sourceId,targetId){
+		    	var e = $("#"+sourceId);
+		    	if (e.is(":visible")){
+		    		$("#"+sourceId).hide();
+		    		$("#"+targetId).attr("src","img/show.png");
+		    	}else{
+		    		$("#"+sourceId).show();
+		    		$("#"+targetId).attr("src","img/hidden.png");
+		    	}
+	    	}
+	    	function intOnly() {
+			   if (!((window.event.keyCode >= 48)&&(window.event.keyCode <= 57) || (window.event.keyCode == 45))){
+			   	   window.event.keyCode = 0;
+			   }
+			}
+		</script>
+		 <!--<script type="text/jscript" src="js/comment.js"></script>-->
+ 	</body>
+</html>
